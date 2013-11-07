@@ -263,6 +263,10 @@ $response = $request->send();
         </section>
 
         <section>
+          <h1>PHP Community and Ecosystem</h1>
+        </section>
+
+        <section>
           <h1>Symfony</h1>
           <ul>
             <li><a href="http://symfony.com/">Symfony</a>: A cutting-edge PHP web framework.</a></li>
@@ -278,13 +282,51 @@ $response = $request->send();
             <li>Behavior-Driven Development
               <ul>
                 <li><a href="http://behat.org/">Behat</a> StoryBDD framework, inspired by Ruby <a href="http://cukes.info/">Cucumber</a>.</li>
-                <li><a href="http://www.phpspec.net/">PHPSpec</a> SpecBDD framework, inspired by Ruby<a href="http://rspec.info/">RSpec</a>.</li>
+                <li><a href="http://www.phpspec.net/">PHPSpec</a> SpecBDD framework, inspired by Ruby <a href="http://rspec.info/">RSpec</a>.</li>
                 <li><a href="http://www.codeception.com/">Codeception</a> full-stack BDD testing framework.</li>
               </ul>
             </li>
             <li><a href="https://github.com/padraic/mockery">Mockery</a> mock object framework can be integrated with PHPUnit or PHPSpec.</li>
             <li><a href="https://github.com/phpspec/prophecy">Prophecy</a>, a highly-opinionated, very powerful and flexible mocking framework. Integrated with PHPSpec, can be used with PHPUnit.</li>
           </ul>
+        </section>
+
+        <section>
+          <h2>DocBlocks with PHPDoc</h2>
+          <p><a href="http://www.phpdoc.org/">phpDocumentor</a> has won, set the <a href="http://www.phpdoc.org/docs/latest/for-users/phpdoc-reference.html">PHPDoc standard</a>, and is now available via <a href="http://www.phpdoc.org/docs/latest/for-users/installation/using-composer.html">Composer</a>!</p>
+          <pre><code data-trim contenteditable>
+/**
+ * Short description.
+ *
+ * Long description. This text may contain
+ * multiple lines and even some _markdown_.
+ *
+ * * Markdown style lists function too
+ * * Just try this out once
+ *
+ * @param int    $example  Example function/method parameter description.
+ * @param string $example2 Second example.
+ */
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Annotations</h2>
+          <p>Define your own DocBlock annotations with the 
+          <a href="http://www.doctrine-project.org/">Doctrine</a> ORM's 
+          <a href="http://docs.doctrine-project.org/projects/doctrine-common/en/latest/reference/annotations.html">annotations</a> component:</p>
+          <pre><code data-trim contenteditable>
+namespace MyProject\Entities;
+
+use Doctrine\ORM\Mapping AS ORM;
+use Symfony\Component\Validation\Constraints AS Assert;
+
+/**
+ * @ORM\Entity
+ * @MyProject\Annotations\Foobarable
+ */
+class User {}
+          </code></pre>
         </section>
 
         <!-- Example of nested vertical slides -->
