@@ -329,6 +329,30 @@ class User {}
           </code></pre>
         </section>
 
+        <section>
+          <h1>PHP Core Language</h1>
+        </section>
+
+        <section>
+          <h2>Lambdas</h2>
+          <p>...or <a href="http://php.net/manual/en/functions.anonymous.php">anonymous functions</a>, introduced in 5.3:</p>
+          <pre><code data-trim contenteditable>
+$input = array(1, 2, 3, 4, 5);
+$output = array_filter($input, function ($v) { return $v > 2; });
+
+// or...
+
+$max_comparator = function ($v) { return $v > 2; };
+$output = array_filter($input, $max_comparator);
+          </code></pre>
+          <div class="fragment">
+          <p>Don't use create_function!</p>
+          <pre><code data-trim contenteditable>
+$f = create_function('$a,$b', 'return $a * $b;');
+          </code></pre>
+          </div>
+        </section>
+
         <!-- Example of nested vertical slides -->
         <section>
           <section>
