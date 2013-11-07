@@ -214,6 +214,7 @@ $ composer install
 
         <section>
           <h2>Using Composer-Installed Packages</h2>
+          <p>Composer automatically generates a <a href="http://www.sitepoint.com/autoloading-and-the-psr-0-standard/">PSR-0-compliant autoloader</a>.</p>
           <pre><code data-trim contenteditable>
 require 'app-package-dir/vendor/autoload.php';
 
@@ -221,6 +222,69 @@ $client = new \Guzzle\Http\Client('http://guzzlephp.org');
 $request = $client->get('/');
 $response = $request->send();
           </code></pre>
+        </section>
+
+        <section>
+          <h2>Composer and github.umn.edu</h2>
+          <pre><code data-trim contenteditable>
+{
+  "require": {
+    "umnlib/config": "*"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@github.umn.edu:Libraries/config-php.git"
+    }   
+  ]   
+}
+          </code></pre>
+          <p>(Composer can search multiple repository types for packages: packagist.org, github, PEAR...)</p> 
+        </section>
+
+        <section>
+          <h2>Who Cares?</h2>
+          <div class="fragment">
+            <blockquote cite="http://www.youtube.com/watch?v=HFIdQVDbhGk&feature=youtu.be">
+              &ldquo;PHP sucks at sharing... Sharing is how open source works. Sucking at sharing is how open source dies.&rdquo;
+            </blockquote>
+            <p> &mdash; Larry Garfield</p>
+            <p><small>Drupal core contributor, Drupal 8 Web Services Lead, Senior Architecht and Consultant at Palantir.net</small></p>
+            <p><a href="http://www.youtube.com/watch?v=HFIdQVDbhGk&feature=youtu.be">Composer: There's a Module (or Library) for That</a></p>
+            <p><small>DrupalCon Portland 2013</small></p>
+          </div>
+        </section>
+
+        <section>
+          <h2>FIG</h2>
+          <h3><a href="http://www.php-fig.org/">PHP Framework Interop Group</a></h3>
+          <p><a href="https://github.com/php-fig/fig-standards">PHP Standard Requests</a>, e.g. PSR-0</a></p>
+          <p>Drupal, Symfony, almost all major projects participate.</p>
+        </section>
+
+        <section>
+          <h1>Symfony</h1>
+          <ul>
+            <li><a href="http://symfony.com/">Symfony</a>: A cutting-edge PHP web framework.</a></li>
+            <li><a href="http://symfony.com/components">Symfony Components</a> can be used outside of Symfony, e.g. in <a href="http://symfony.com/blog/symfony2-meets-drupal-8">Drupal 8</a>.</li>
+            <li><a href="http://fabien.potencier.org/article/50/create-your-own-framework-on-top-of-the-symfony2-components-part-1">Create your own framework... on top of the Symfony2 Components</a>, by Fabien Potencier</li>
+          </ul>
+        </section>
+
+        <section>
+          <h1>Testing</h1>
+          <ul>
+            <li><a href="https://github.com/sebastianbergmann/phpunit/">PHPUnit</a>, now available via <a href="http://phpunit.de/manual/current/en/installation.html#installation.composer">Composer</a>!</li>
+            <li>Behavior-Driven Development
+              <ul>
+                <li><a href="http://behat.org/">Behat</a> StoryBDD framework, inspired by Ruby <a href="http://cukes.info/">Cucumber</a>.</li>
+                <li><a href="http://www.phpspec.net/">PHPSpec</a> SpecBDD framework, inspired by Ruby<a href="http://rspec.info/">RSpec</a>.</li>
+                <li><a href="http://www.codeception.com/">Codeception</a> full-stack BDD testing framework.</li>
+              </ul>
+            </li>
+            <li><a href="https://github.com/padraic/mockery">Mockery</a> mock object framework can be integrated with PHPUnit or PHPSpec.</li>
+            <li><a href="https://github.com/phpspec/prophecy">Prophecy</a>, a highly-opinionated, very powerful and flexible mocking framework. Integrated with PHPSpec, can be used with PHPUnit.</li>
+          </ul>
         </section>
 
         <!-- Example of nested vertical slides -->
