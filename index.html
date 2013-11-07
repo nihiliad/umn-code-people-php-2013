@@ -386,6 +386,27 @@ function Y($F)
           </code></pre>
         </section>
 
+        <section>
+          <h2>Traits</h2>
+          <p>New in 5.4, <a href="http://php.net/manual/en/language.oop5.traits.php">traits</a> provide OO reuse without inheritance, like interfaces with implementation:</p>
+          <pre><code data-trim contenteditable>
+class Base {
+    public function sayHello() { echo 'Hello '; }
+}
+
+trait SayWorld {
+    public function sayHello() {
+        parent::sayHello();
+        echo 'World!';
+    }
+}
+
+class MyHelloWorld extends Base { use SayWorld; }
+$o = new MyHelloWorld();
+$o->sayHello(); // Hello World!
+          </code></pre>
+        </section>
+
         <!-- Example of nested vertical slides -->
         <section>
           <section>
