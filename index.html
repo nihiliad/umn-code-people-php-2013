@@ -346,11 +346,44 @@ $max_comparator = function ($v) { return $v > 2; };
 $output = array_filter($input, $max_comparator);
           </code></pre>
           <div class="fragment">
-          <p>Don't use create_function!</p>
+          <p>Don't use <a href="http://us3.php.net/create_function">create_function</a>!</p>
           <pre><code data-trim contenteditable>
 $f = create_function('$a,$b', 'return $a * $b;');
           </code></pre>
           </div>
+        </section>
+
+        <section>
+          <h2>Closures</h2>
+          <p>Lamdbas with state, i.e. anonymous functions that are "closed over" variables from the surrounding scope:</p>
+          <pre><code data-trim contenteditable>
+$x = 1
+$incrementor = function() use (&$x) { ++$x; }
+$incrementor(); // 1
+$incrementor(); // 2
+$incrementor(); // 3
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Functional Programming</h2>
+          <p>Lambdas and closures allow functional programming, even the infamous <a href="http://fabien.potencier.org/article/17/on-php-5-3-lambda-functions-and-closures">Y-Combinator</a>:
+          <pre><code data-trim contenteditable>
+function Y($F)
+{
+  $func = function ($f) { return $f($f); };
+ 
+  return $func(function ($f) use($F)
+  {
+    return $F(function ($x) use($f)
+    {
+      $ff = $f($f);
+ 
+      return $ff($x);
+    });
+  });
+}
+          </code></pre>
         </section>
 
         <!-- Example of nested vertical slides -->
