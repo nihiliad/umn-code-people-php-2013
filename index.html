@@ -93,6 +93,7 @@
             &ldquo;PHP is probably not the best language out there, and I'm the first one to scream about its quirks, but <strong>PHP is the best web platform</strong>... ever.&rdquo;
           </blockquote>
           <p> &mdash; <a href="http://fabien.potencier.org/article/64/php-is-much-better-than-what-you-think">Fabien Potencier</a></p>
+          <p class="fragment">Not sure I agree with that last phrase, but the title is accurate for most of us.</p>
         </section>
 
         <section>
@@ -101,16 +102,16 @@
           <ul>
             <li class="fragment">1995: PHP 1.0</li>
             <li class="fragment">2004: PHP 5.0
-              <ul><li>Radically-New Object Model</li></ul>
+              <ul><li>Radically-New <a href="http://www.php.net/manual/en/language.oop5.php">Object Model</a></li></ul>
             </li>   
             <li class="fragment">2009: PHP 5.3
-              <ul><li>Namespaces, Lambdas, Closures, ...</li></ul>
+              <ul><li><a href="http://www.php.net/manual/en/language.namespaces.php">Namespaces</a>, <a href="http://php.net/manual/en/functions.anonymous.php">Lambdas and Closures</a>, ...</li></ul>
             </li>
             <li class="fragment">2012: PHP 5.4
-              <ul><li>Traits, Built-in Web Server, ...</li></ul>
+              <ul><li><a href="http://php.net/manual/en/language.oop5.traits.php">Traits</a>, <a href="http://php.net/manual/en/features.commandline.webserver.php">Built-in Web Server</a>, ...</li></ul>
             </li>
             <li class="fragment">2013: PHP 5.5
-              <ul><li>Generators, ...</li></ul>
+              <ul><li><a href="http://www.php.net/manual/en/language.generators.php">Generators</a>, ...</li></ul>
             </li>
           </ul>
         </section>
@@ -141,7 +142,7 @@
                 <li class="fragment">Can't find anything.</li>
               </ul>
             </li>
-            <li class="fragment">System-wide installs. Requires root.</li>
+            <li class="fragment">Originally built for system-wide installs, requiring root.</li>
             <li class="fragment">Complex, poorly-documented system.</li>
           </ul>
         </section>
@@ -186,7 +187,7 @@
           <h3>Simpler and Easier</h3>
           <ul>
             <li>Low entry barriers to publishing on packagist.org.</li>
-            <li>Per-app package sets, similar to Ruby <a href="">Bundler</a>.</li>
+            <li>Per-app package sets, similar to Ruby <a href="http://bundler.io/">Bundler</a>.</li>
             <li>Simple JSON package metadata format, inspired by node.js <a href="https://npmjs.org/doc/files/package.json.html">npm</a>.</li>
           </ul>
         </section>
@@ -356,7 +357,7 @@ $output = array_filter($input, $max_comparator);
           <div class="fragment">
           <p>Don't use <a href="http://us3.php.net/create_function">create_function</a>!</p>
           <pre><code data-trim contenteditable>
-$f = create_function('$a,$b', 'return $a * $b;');
+$max_comparator = create_function('$v', 'return $v > 2;');
           </code></pre>
           </div>
         </section>
@@ -365,11 +366,11 @@ $f = create_function('$a,$b', 'return $a * $b;');
           <h2>Closures</h2>
           <p>Lamdbas with state, i.e. anonymous functions that are "closed over" variables from the surrounding scope:</p>
           <pre><code data-trim contenteditable>
-$x = 1
-$incrementor = function() use (&$x) { ++$x; }
-$incrementor(); // 1
+$x = 1;
+$incrementor = function() use (&$x) { return ++$x; }
 $incrementor(); // 2
 $incrementor(); // 3
+$incrementor(); // 4
           </code></pre>
         </section>
 
@@ -396,7 +397,7 @@ function Y($F)
 
         <section>
           <h2>Traits</h2>
-          <p>New in 5.4, <a href="http://php.net/manual/en/language.oop5.traits.php">traits</a> provide OO reuse without inheritance, like interfaces with implementation:</p>
+          <p>New in 5.4, <a href="http://php.net/manual/en/language.oop5.traits.php">traits</a> provide OO reuse without inheritance, like interfaces, but with implementation:</p>
           <pre><code data-trim contenteditable>
 class Base {
     public function sayHello() { echo 'Hello '; }
@@ -413,6 +414,7 @@ class MyHelloWorld extends Base { use SayWorld; }
 $o = new MyHelloWorld();
 $o->sayHello(); // Hello World!
           </code></pre>
+          <p class="fragment">For the theory, see <a href="http://scg.unibe.ch/research/traits">Traits - Composable Units of Behavior</a>.
         </section>
 
         <section>
@@ -420,19 +422,43 @@ $o->sayHello(); // Hello World!
           <p>New in 5.5, <a href="">generators</a> allow for very simple and easy implementation of iterators:</p>
           <pre><code data-trim contenteditable>
 function fibonacci() {
-    $last = 0;
-    $current = 1;
-    yield 1;
-    while (true) {
-        $current = $last + $current;
-        $last = $current - $last;
-        yield $current;
-    }
+  $last = 0;
+  yield 0;
+  $current = 1;
+  yield 1;
+  while (true) {
+    $current = $last + $current;
+    $last = $current - $last;
+    yield $current;
+  }
 }
-fibonacci(); // 0
-fibonacci(); // 1
-fibonacci(); // 1
-fibonacci(); // 2
+
+// Prints the first sixteen Fibonacci numbers:
+foreach (fibonacci() as $n => $Fn) {
+  echo "F[$n] = $Fn\n";
+  if ($n == 15) break; // Prevent an infinite loop!
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Generators are Iterators</h2>
+          <p>An equivalent way to generate the Fibonacci numbers, by calling methods
+            from the Iterator interface, which Generator implements:
+          </p>
+          <pre><code data-trim contenteditable>
+$generator = fibonacci();
+$reflector = new ReflectionClass($generator);
+$reflector->getName(); // Generator
+$reflector->getInterfaceNames(); // Iterator, Traversable
+
+while ($generator->valid()) {
+  $n = $generator->key();
+  $Fn = $generator->current();
+  echo "F[$n] = $Fn\n";
+  if ($n == $limit) break; // Prevent an infinite loop!
+  $generator->next();
+}
           </code></pre>
         </section>
 
